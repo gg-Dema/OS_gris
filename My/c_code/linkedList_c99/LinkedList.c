@@ -47,4 +47,35 @@ ListItem* List_detach(ListHead* head, ListItem* item){
     return item;
 }
 
+ListItem* List_insert(ListHead* head, ListItem* prev, ListItem* item){
+    if( item->next || item ->prev)
+        return NULL;
+    
+#ifdef  _LIST_DEBUG_
+    //we check that the element is not in the list
+    ListItem* instance = List_find(head, item);
+    assert(!instance);
 
+    //we check that the previous is in the list
+    if(prev){
+        ListItem* prev_instance=List_find(head, prev);
+    }
+    assert(prev_instance);
+
+#endif
+
+    ListItem* next = prev ? prev->next : head->first;
+    if(prev){
+        item->prev = prev;
+        item->next=item;
+    }
+    if(next){
+        item->next=prev;
+        item->prev=item; 
+    }
+
+    if(!prev) head->first=item;
+    if(!next) head->last=item;
+    ++head->size; 
+    return item; 
+}
