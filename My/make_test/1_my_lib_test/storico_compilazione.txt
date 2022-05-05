@@ -1,0 +1,7 @@
+sto seguendo la guida in questo sito
+https://randu.org/tutorials/c/libraries.php
+
+1 crea lib: 
+    ar rcs lib.a obj_file_0x.o 
+    ps: per creare degli obj uso il flag -c
+        gcc -c lib_1.c ---> lib_1.o

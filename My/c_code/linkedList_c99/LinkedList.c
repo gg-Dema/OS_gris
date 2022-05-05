@@ -30,12 +30,15 @@ ListItem* List_detach(ListHead* head, ListItem* item){
 
     ListItem* prev = item->prev;
     ListItem* next = item->next; 
+    
     if(prev){
         prev->next = next;
     }
     if(next){
         next->prev = prev; 
     }
+
+
     if(item==head->first){
         head->first = next;
     }
