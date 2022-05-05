@@ -1,23 +1,22 @@
-#include "LinkedList.h"
 #include <assert.h>
-#define NULL 0
+#include "LinkedList.h"
+
 
 void List_init(ListHead* head){
-    head->first=NULL; 
-    head->last=NULL;
+    head->first=0; 
+    head->last=0;
     head->size=0;
 }
 
-ListItem* List_find(ListHead* head, 
-                    ListItem* item){
+ListItem* List_find(ListHead* head, ListItem* item){
+
     ListItem* aux = head->first; 
     while (aux)
     {   if(aux==item)
             return item; 
         aux = aux ->next;
-
     }
-    return NULL;    
+    return 0;    
 }
 
 ListItem* List_detach(ListHead* head, ListItem* item){
@@ -46,13 +45,14 @@ ListItem* List_detach(ListHead* head, ListItem* item){
         head->last=prev; 
     }
     head->size--;
-    item->next = item->prev = NULL;
+    item->next = item->prev = 0;
     return item;
 }
 
+
 ListItem* List_insert(ListHead* head, ListItem* prev, ListItem* item){
     if( item->next || item ->prev)
-        return NULL;
+        return 0;
     
 #ifdef  _LIST_DEBUG_
     //we check that the element is not in the list
@@ -70,7 +70,10 @@ ListItem* List_insert(ListHead* head, ListItem* prev, ListItem* item){
     ListItem* next = prev ? prev->next : head->first;
     if(prev){
         item->prev = prev;
-        item->next=item;
+        prev->next = item; 
+        //my error--> stavo assegnando male i puntatori,
+        // chiudendo a cerchio il tutto| il codice seguente è solo un memorandum
+        //item->next = item;
     }
     if(next){
         item->next=prev;

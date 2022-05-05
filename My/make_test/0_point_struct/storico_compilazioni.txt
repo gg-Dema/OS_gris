@@ -1,0 +1,39 @@
+idea 0: 
+    compilare con standard gcc
+    DEVO DARE TUTTI I FILE .c NECESSARI:
+        test_point.c
+        point.c
+    >>> gcc test_point.c point.c 
+    ->ritorna un file a.out EXEcutable
+
+OPT 1: add -o : output file
+    >>> gcc test_point.c point.c -o out
+    ->crea un file chiamato out. (EXE)
+OPT 2: -c : compila file (sorgenti) senza linking
+    genera degli .o file
+
+OPT 3: somma OPT1 e OPT2 
+    gcc -c point.c test_point.c -o exe_file 
+    NO : errore multipli file---> vedere come collegare il tutto seguendo i makeFIle di Grisetti
+
+    ************* BY MAKE FILE GRISETTI 03.linkedList ******************
+    %.o:	%.c $(HEADERS)
+	echo "sto a compilando evero un puntoci in un puntoo"
+	$(CC) $(CCOPTS) -c -o $@  $<
+    
+    ********
+    regola traducibile in :
+     PER_OGNI.o:  ---> crealo se modifico CORRISPETTIVO.c o un HEADER a caso 
+                        (resta da capire perche modificare gli header comporti una modiica di roba lontana)
+        gcc -std=gnu99 -Wall -D_LIST_DEBUG -c -o PER_OGNI.o PER_OGNI.c
+    
+        notare che grisetti fa corrispondere ad un file una singola compilazione, non ho trovato pezzi di file multipli
+
+Idea 1: 
+    studiare flusso di compilazione multisorgente.
+    .h HEADER file segnalano la conoscenza al compilatore di alcuni oggetti (.o) (COME???)
+    il compiler genera (.o) file for sorgenti (.c .cpp) e se trova qualche cosa mancante 
+    si fida del file header, che dovrà essere completato in seguito.
+
+    Il Linker prende ogni (.o) file e li collega, sostituendo il flag inserito dal compilatore
+    con il corrispettivo pezzo di codice

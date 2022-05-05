@@ -1,7 +1,13 @@
 sto seguendo la guida in questo sito
 https://randu.org/tutorials/c/libraries.php
 
-1 crea lib: 
+TEST 1 crea lib: 
     ar rcs lib.a obj_file_0x.o 
     ps: per creare degli obj uso il flag -c
-        gcc -c lib_1.c ---> lib_1.o
+        >>> gcc -c lib_1.c ---> lib_1.o
+    >>> ar rcs lib.a lib_1.o ---> lib.a
+
+
+    finale: compilazione e link
+    >>>gcc -o lib_test_exe lib_test.c -L lib.a
+    il flag -L indica dove cercare (directory corrente)

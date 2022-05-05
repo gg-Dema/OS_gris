@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "LinkedList.h"
-#define MAX_NUMB_ITEMS 50
 
+#define MAX_NUMB_ITEMS 64
 
 //derived class
 typedef struct  IntListItem{
@@ -22,6 +22,7 @@ void IntList_print(ListHead* head){
         printf("%d ", element->info); 
         aux = aux -> next; 
     }
+    printf("]\n");
     
 }
 
@@ -35,17 +36,19 @@ int main(int argc, char const *argv[])
 
         IntListItem* new_element = (IntListItem*) malloc(sizeof(IntListItem));
         if (!new_element){
-            pritnf("out of memory\n");
+            printf("out of memory\n");
             break; 
         }
-
         new_element-> list.prev = 0;
         new_element-> list.next = 0;
         new_element-> info = i; 
+
+
         ListItem* result = List_insert(&head, head.last, (ListItem*) new_element);
         assert(result);
 
     }
+
     IntList_print(&head);
 
 
