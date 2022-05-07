@@ -62,8 +62,9 @@ ListItem* List_insert(ListHead* head, ListItem* prev, ListItem* item){
     //we check that the previous is in the list
     if(prev){
         ListItem* prev_instance=List_find(head, prev);
+        assert(prev_instance);
+
     }
-    assert(prev_instance);
 
 #endif
 
