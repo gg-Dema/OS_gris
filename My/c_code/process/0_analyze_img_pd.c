@@ -9,6 +9,7 @@ int main(int argc, char* argv[]){
     free(p); 
     printf("&i=%p | &j=%p | &main=%p | &argc=%p |\n", &i, &j, &main, &argc);
     printf("&k=%p | k=%p  |  &p=%p   | p=%p\n", &k, k, &p, p); 
+    //pause() questo serve a bloccare il programma e poter usare ps -e | grep mem
     return 0; 
 }
 
