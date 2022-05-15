@@ -1,0 +1,108 @@
+VALGRID ---> memory 
+GDB
+GPROF ---> time of function at run time
+
+
+//compilazione con debugging info
+
+OPZIONE -g DURANTE LA COMPILAZIONE
+	gcc -g file.c -o file
+
+	Il binario generato avrà dimensioni maggiorate, causa info di debug
+	
+GDB: 
+	//il prof del corso consiglia di creare un comando personale per gdb, modificando 
+	  .gdbinit
+	  
+	posso runnare comandi relativi al mio programma, come print(sizeof(my_elm))
+	  
+	  													NOTARE: non printf, just print
+
+----------------
+BASE VIDEO: SEGMENTATION FAULT 
+----------------
+
+#include <stdlib.h>
+#include <stdio.h>
+
+
+void bar(){
+	int *p = NULL;
+	p = malloc(sizeof(int); //add later, all is working
+	*p = 42; //seg fault
+	free(p) //remove the error by valgrid (4bytes lost) 
+	}
+	
+voif foo(){
+	bar();
+	}
+	
+int main(){
+	foo();
+	return 0; 
+	}
+
+////compila (-g) ma non runna (seg faul (core dumped) ) 
+-----> uso gdb
+>> gdb ./exe --tui
+	change user interface 
+	start 
+	run 
+	backtrace (tree of call before segFaul)
+	ESISTONO SHORTCUT (s,
+					   c AKA continue, 
+					   q AKA quit
+					   ...)
+
+
+
+USO DI VALGRID NELLA STESSA PROBLEMATICA
+	valgrid ./prog.exe
+	
+	---HEAP SUMMARY
+	---LEAK SUMMARY
+	
+	option:  --leak-check=full ./exe_file
+			---> ritorna la funzione che causa il leak 
+			
+---------------VALGRID PRO --------------------
+2 kind of error : 	
+		memory leak : forgets to free memory (no real error, only not optim)
+		memory error: access to forbidden memory (red flag)
+
+in memory error: not always easy to see it, cause we can be "lucky" and use a good zone of memory
+
+out of valgrid:
+==4651== Invalid write of size 1
+==4651==    at 0x80486A4: main (myprogram.c:58)
+==4651==  Address 0x4449054 is not stack'd, malloc'd or (recently) free'd
+==4651==
+==4651== ERROR SUMMARY: 1 errors from 1 contexts
+==4651== malloc/free: in use at exit: 0 bytes in 0 blocks.
+==4651== malloc/free: 1 allocs, 1 frees, 10 bytes allocated.
+==4651== For counts of detected errors, rerun with: -v
+==4651== All heap blocks were freed -- no leaks are possible.
+MEANING: --> invadil write of size 1 byte, in line 58, 1 error in total
+C_code:
+56     ...
+57     char *copy = malloc(strlen(buffer));
+58     strcpy(copy, buffer);
+59     ...
+error: malloc take strlen +1 (end char), not strlen.
+In general malloc round the memory, so sometimes seems like it's working 
+(multipli di 4 o 8 byte in generale)
+
+
+tipi di errore in valgrid: 
+	invalid read/write of size X
+	use of uninitialised value 
+	conditional jump or move depend on uninitialised values
+	source and destination overlap in memcpy
+	invalid free
+	
+tipi di memory_leaks:
+	definitely lost : ---> not free
+	indirectly lost : ---> lost by reference (exe free head of list AKA lost the child)
+	possibly lost	: ---> valgrid not sure 
+	still reachable	: ---> the program has a pointer at exit ???
+	
