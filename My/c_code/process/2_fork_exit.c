@@ -23,7 +23,10 @@ int main(int argc, char const *argv[])
     if(pid==0){//child
         atexit(handler_for_child);
         _exit(1); //non dovrebbe eseguire il gestore risorse
-        //exit(1); //gestisce le risorse del figlio
+        //exit(1); //gestisce le risorse del figlio 
+        //in generale non si dovrebbe usare exit() --> è una funct C che esegue pulizie varie
+        //exit() chiama _exit(), piu altre routine (EXE svuota buffer etc)
+        //rischio di distruggere il buffer del padre (CREDO)
     }
     else{//parent
         atexit(handler_for_parent);
