@@ -4,6 +4,19 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+/*
+Esercizio inventato da me:
+    2 processi, padre e figlio, il padre manda due segnali
+    al figlio (sigursr1, sigterm)
+    il figlio installa dei gestori, per il momento ignora il msg
+    e termina se stesso con il kill
+
+    lo sleep del padre serve a permettere al figlio di installare 
+    correttamente i gestori ed entrare nel while infinito. 
+    i gestori devono restare attivi per tutta la durata del processo
+    
+*/
+
 //handler function 
 void msg_handler(int signum){
     char const msg[] = "F:\tricevo il segnale e lo ignoro\n";
