@@ -12,9 +12,10 @@ Esercizio inventato da me:
     e termina se stesso con il kill
 
     lo sleep del padre serve a permettere al figlio di installare 
-    correttamente i gestori ed entrare nel while infinito. 
+    correttamente i gestori.
     i gestori devono restare attivi per tutta la durata del processo
-    
+    la funct pause() mette il processo chiamante in pausa finche non arriva un segnale generale
+
 */
 
 //handler function 
@@ -45,13 +46,15 @@ int main(int argc, char const *argv[])
         int ret_2 = sigaction(SIGTERM, &act_kill, NULL);
 
         printf("F:\n\tfiglio pid %d, figlio vede pid_val: %d\n", getpid(), pid);
-        while(1); //dopo aver definito la struct aspetto infinito finche il padre non manda il sig
+        //dopo aver definito la struct aspetto infinito finche il padre non manda il sig
+        pause(); //aspetto il primo segnale
+        pause(); //aspetto il secondo segnale
     }
     else{ //parent, pid contiene il valore del figlio
         printf("P:\n\tpadre ha pid %d, padre vede pid_val: %d (figlio)\n", getpid(), pid); 
         //mando segnale al figlio (pid)
-        kill(pid, SIGUSR1); //segnale usabile come messaggio
-        sleep(1); 
+        sleep(3);
+        kill(pid, SIGUSR1); //segnale usabile come messaggio 
         kill(pid, SIGTERM);
         wait(NULL);
     }
