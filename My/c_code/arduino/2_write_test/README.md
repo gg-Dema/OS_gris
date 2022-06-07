@@ -1,0 +1,1 @@
+test per scrivere valore su determinato pin
