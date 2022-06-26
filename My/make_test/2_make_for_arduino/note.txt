@@ -1,0 +1,51 @@
+(ps: per installare avr-gcc e tutte le dipendenze: sudo apt install arduino)
+
+
+robe da definire nelle opzioni di compilazione:
+    -Wall : -Warning all || abilita tutti i warning possibili
+    --std=gnu99
+    -DF_CPU=16000000UL ||define cpu frequency: specifica per l'avr mega2560
+    -03 | ottimizzazioni del codice 
+    -f---> flags
+        -funisgned-char:
+        Some processors and instruction set architectures
+        or application binary interfaces favor a 
+        signed character (byte) type
+        (e.g. because it maps nicely to some machine code instruction)
+        other favor an unsigned one
+
+    -mmcu=atmega2560  || CPU SU CUI OPERARE
+    -D__AVR_3_BYTE_PC__ ---> define var: specifica architettura avr6
+
+AS_opts: 
+    -x
+    assembler-with-cpp (TUTTE LE OPZIONI DI SOPRA)
+
+
+thread d'esecuzione: 
+    compila c in o
+    compila o in elf (binario non caricabile)
+    compila elf in hex (caricabile)
+    carica hex con avrDude
+
+AVR GCC utils:
+    -x [c | c++ | assembler | none] --- > none asserisce da solo
+  
+AVRDUDE flags
+    -p processor
+    -P PORT mounted
+    -c compile and assembler, not link
+
+AVR_OBJCOPY: 
+    -O ihex è il formato d'arrivo
+    -R .eeprom  
+        --remove-section <name>    
+        Remove section <name> from the output 
+        eeprom è un tipo di memoria
+
+
+to ask
+AVRDUDE_PROGRAMMER
+AVRDUDE_VERBOSE
+AVRDUDE_EARSE_COUNTER
+AVRDUDE_NO_VERIFY
