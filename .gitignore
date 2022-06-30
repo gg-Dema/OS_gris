@@ -1,3 +1,7 @@
 /Grisetti/
-**.hex
-**.elf
+/My/c_code/arduino/**.hex/
+/My/c_code/arduino/**.elf/
+/My/c_code/.vscode/
+/My/make_test/.vscode/
+/My/c_code/**.o/
+/My/make_test/**.o/
