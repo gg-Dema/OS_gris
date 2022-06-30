@@ -6,7 +6,7 @@
  
 
 
-//my pin: PB1(52) e PB3(50)
+//my pin: PB1(52) e PB3(50) s
 //il prof sceglie altri pin (pb0 pb1) ---> input: 00000011 AKA 0x03
 const uint8_t encoder_mask = 0b00001010;
 // ~ =  0xA;
