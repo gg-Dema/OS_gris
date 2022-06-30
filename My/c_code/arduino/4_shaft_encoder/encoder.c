@@ -1,34 +1,23 @@
-#include <util/delay.h>
-#include <avr/io.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <avr/io.h>
+#include <util/delay.h>
 #include "../avr_common/uart.h"
+ 
 
 
-/*ingresso: selezionare i pin d'input
-  guardando datasheet scelgo pb --> pin 53 : pb0 
-                                    pin 52 : pb1
-*/                                    
-const uint8_t encoder_mask = 0x03; //numero esadecimale con ultimi 2 bit a 1
-
+//my pin: PB1(52) e PB3(50)
+//il prof sceglie altri pin (pb0 pb1) ---> input: 00000011 AKA 0x03
+const uint8_t encoder_mask = 0b00001010;
+// ~ =  0xA;
 int main(){
     printf_init();
     DDRB &= ~encoder_mask; 
+    PORTB |= encoder_mask;
 
-    //prendo encoder mask (tutto 0 tranne ultimi 2)
-    //mask:     00000011
-    //nego l'encoder mask  ~ -> not bitAbit
-    //mask:     11111100
-    //facendo l'and con questa roba posso azzerare gli ultimi bit
-
-    //metto a pullUp i pin in input: 
-    //metto a 1 gli ultimi bit di portB 
-    PORTB |= encoder_mask; // OR binario
     while(1){
-        //leggo gli ultimi bit della porta b, vedo se hanno senso
-        uint8_t last_two_bits = PINB & encoder_mask; 
-        printf("%x\n", (int)last_two_bits); 
+        uint8_t my_value = PINB & encoder_mask;  
+        printf("Value on PIN B (B1| B3) %x\n", (int) my_value); //printa 10---> in esadecimale
         _delay_ms(100);
     }
-
 }
