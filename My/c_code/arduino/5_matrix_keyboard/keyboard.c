@@ -68,7 +68,7 @@ int main(void){
 
     //config porta A:
     DDRA=0xF0; //primi quattro out, ultimi 4 in
-    PORTA=0x0F; //pull up on inputs buts
+    PORTA=0x0F; //pull up on inputs output
 
     KeyEvent events[MAX_EVENTS]; 
 
