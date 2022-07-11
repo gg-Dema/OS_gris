@@ -28,5 +28,18 @@ int main(void){
 
     //configure time: set prescaler to 1024
     TCCR5A = 0;
-    TCCR5B = (1<<WGM53) | (1 << CS50) | (1 << CS52); 
+    TCCR5B = (1<<WGM52) | (1 << CS50) | (1 << CS52); 
+
+    uint16_t output_compare_register_value = (uint16_t)(15.62*timer_duration_ms); 
+    OCR5A = output_compare_register_value; 
+
+    cli(); //disable system interrupt
+    TIMSK5 |= (1<<OCIE5A); //enable timer interrupt 
+    sei(); //enable system interrupt
+    while(1){
+        while (!interrupt_occurred); 
+        interrupt_occurred=0; 
+        printf("int: %u\n", int_count); 
+        }
+        
 }
