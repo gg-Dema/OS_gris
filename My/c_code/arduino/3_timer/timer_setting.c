@@ -10,7 +10,7 @@ int main(void){
     //choosen timer 4:
     TCCR4A = 0; //disables all PWM and interrupts
 
-    TCCR4B = (1 << CS42) | (1 << CS40); 
+    TCCR4B = (1 << CS42) | (1 << CS40); //specifiche di scaling
     while(1){
         uint16_t timer_val = TCNT4; 
         printf("count %u\n", timer_val); 
